@@ -118,6 +118,7 @@ class StaticPublisher(BasePublisher):
     <meta property="og:description" content="{meta_desc}">
     <meta property="og:image" content="{og_image}">
     <meta name="twitter:card" content="summary_large_image">
+    <meta name="p:domain_verify" content="cfb450e2c89091ff91473d4d9fb9c5d1"/>
     
     <!-- Google Fonts & Tailwind CDN -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
