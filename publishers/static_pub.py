@@ -51,13 +51,21 @@ class StaticPublisher(BasePublisher):
     def publish(self, article_data: dict, featured_image_path: str) -> bool:
         logger.info(f"Publishing article '{article_data.get('title')}' to Static Blog...")
         
+        # 1. Apply Automatic Internal Linking
+        from internal_linker import internal_linker
+        from affiliate_engine import affiliate_engine
+
         md_content = article_data.get("markdown_content", "")
-        md_body = re.sub(r'^#\s+.*?\n', '', md_content).strip()
+        md_content_linked = internal_linker.insert_internal_links(md_content, article_data.get("slug", ""))
+        md_body = re.sub(r'^#\s+.*?\n', '', md_content_linked).strip()
         
         html_body = markdown.markdown(
             md_body,
             extensions=['extra', 'tables', 'fenced_code', 'toc', 'nl2br']
         )
+
+        # 2. Inject High-Converting Affiliate Banner Box
+        html_body = affiliate_engine.inject_affiliate_boxes(html_body, article_data.get("category", ""))
 
         article_record = {
             "title": article_data.get("title"),
