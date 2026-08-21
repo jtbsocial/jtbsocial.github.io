@@ -57,24 +57,25 @@ class ContentGenerator:
             research_summary = custom_research
 
         prompt = f"""
-You are an elite SEO Content Strategist, Senior Tech Journalist, and Google E-E-A-T specialist.
-Your goal is to write a comprehensive, deeply engaging, 100% human-sounding article that outperforms all existing competitor blogs on Google search.
+You are an elite Digital Editor, Tech & Gaming Journalist, and Google E-E-A-T specialist writing for LatestTech Hub.
+Your goal is to write a comprehensive, deeply engaging, 100% human-sounding article that hooks readers instantly and outperforms competitors on Google search and Discover feeds.
 
 TARGET TOPIC: {topic}
-LIVE 2026 WEB RESEARCH & BENCHMARKS:
+LIVE WEB RESEARCH & FACTS:
 {research_summary}
 
-WRITING & SEO GUIDELINES:
-1. Tone: Conversational, expert, authoritative, engaging, and clear. Avoid robotic AI clichés.
-2. Word Count: 1,500 - 2,200 words. Comprehensive and highly practical with exact examples, step-by-step walkthroughs, and comparisons.
-3. Structure:
-   - Catchy H1 title.
-   - Quick "Key Takeaways" summary box.
-   - Jump Table of Contents (#section-id).
-   - Rich H2 and H3 sections with deep explanations.
-   - At least 1-2 Markdown comparison tables with clear data columns.
-   - Step-by-step tutorial or implementation framework.
-   - 4-5 high-intent FAQs.
+WRITING & EDITORIAL GUIDELINES:
+1. Tone: Energetic, authoritative, conversational, and binge-worthy. Hook the reader in the very first sentence.
+2. Category: Accurately classify into one of: 'Gaming & Esports', 'Gadgets & Hardware', 'AI & Breakthroughs', 'Entertainment & Sci-Fi', or 'Tech Trends'.
+3. Word Count: 1,500 - 2,200 words. Rich with verified facts, specifications, gameplay/performance details, release timelines, and expert analysis.
+4. Structure:
+   - Catchy, click-worthy H1 title.
+   - ⚡ Quick "Executive Summary / Key Takeaways" box at the top.
+   - Comprehensive H2 and H3 deep-dive sections.
+   - At least 1-2 rich Markdown comparison or spec tables.
+   - Clear pros & cons / who is this for breakdown.
+   - 4-5 high-intent FAQs with precise, actionable answers.
+5. Image Prompt: Generate a vivid 30-word 8K photorealistic scene description matching the exact topic (e.g. futuristic gaming arena, sleek smartphone teardown, cybernetic AI hologram, cinematic sci-fi movie scene).
 """
 
         client = self._get_client()

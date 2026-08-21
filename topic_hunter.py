@@ -1,6 +1,11 @@
 """
-Topic Hunter — Discovers trending TECH topics and high-CPC seed keywords.
-STRICTLY filters for technology/AI niche to maintain topical authority.
+Advanced Multi-Category Trending Hunter
+Captures real-time viral traffic across:
+1. 🤖 AI & Future Software Launches
+2. 🎮 Trending Video Games & Esports
+3. 📱 Smartphone, Laptop & Hardware Gadgets
+4. 🎬 Sci-Fi, Streaming & Tech-Entertainment
+5. ⚡ Viral Productivity & Internet Trends
 """
 import os
 import json
@@ -12,22 +17,24 @@ from config import config
 
 logger = logging.getLogger(__name__)
 
-# Tech-related keywords that MUST appear in a trending topic for it to qualify
-TECH_FILTER_KEYWORDS = {
-    'ai', 'artificial intelligence', 'machine learning', 'deep learning', 'neural',
-    'gpt', 'llm', 'chatgpt', 'gemini', 'claude', 'copilot', 'openai', 'google',
-    'apple', 'microsoft', 'nvidia', 'amd', 'intel', 'samsung', 'meta', 'amazon',
-    'robot', 'quantum', 'blockchain', 'crypto', 'bitcoin', 'ethereum',
-    'coding', 'programming', 'python', 'javascript', 'developer', 'software',
-    'app', 'startup', 'saas', 'cloud', 'cybersecurity', 'hack', 'data',
-    'iphone', 'android', 'pixel', 'laptop', 'gpu', 'chip', 'processor',
-    'spacex', 'tesla', 'neuralink', 'automation', 'tech', 'gadget',
-    'vr', 'ar', 'headset', 'vision pro', 'wearable', 'smartwatch',
-    'linux', 'windows', 'macos', 'open source', 'github', 'api',
-    'model', 'training', 'inference', 'benchmark', 'performance',
-    'drone', 'ev', 'electric vehicle', 'self-driving', 'autonomous',
-    '5g', '6g', 'satellite', 'internet', 'wifi', 'networking',
-    'streaming', 'gaming', 'console', 'playstation', 'xbox', 'steam',
+# Category mapping keywords for automatic tagging
+CATEGORY_RULES = {
+    "Gaming & Esports": [
+        "game", "gaming", "ps5", "xbox", "gta", "playstation", "nintendo", "steam",
+        "esports", "fortnite", "roblox", "minecraft", "rpg", "fps", "unreal engine"
+    ],
+    "Gadgets & Hardware": [
+        "iphone", "android", "samsung", "pixel", "laptop", "gpu", "nvidia", "rtx",
+        "amd", "intel", "smartwatch", "vision pro", "vr", "headset", "drone", "camera"
+    ],
+    "Entertainment & Sci-Fi": [
+        "movie", "film", "trailer", "netflix", "marvel", "disney", "series",
+        "streaming", "cinema", "box office", "anime", "actor", "hollywood"
+    ],
+    "AI & Breakthroughs": [
+        "ai", "chatgpt", "gemini", "claude", "openai", "copilot", "llm",
+        "deep learning", "quantum", "robot", "tesla optimus", "neuralink", "automation"
+    ]
 }
 
 class TopicHunter:
@@ -53,79 +60,83 @@ class TopicHunter:
         except Exception as e:
             logger.error(f"Failed to save published topic: {e}")
 
-    def _is_tech_topic(self, topic: str) -> bool:
-        """Check if a trending topic is related to technology/AI."""
-        topic_lower = topic.lower()
-        return any(kw in topic_lower for kw in TECH_FILTER_KEYWORDS)
+    def detect_category(self, topic: str) -> str:
+        t_low = topic.lower()
+        for cat, keywords in CATEGORY_RULES.items():
+            if any(k in t_low for k in keywords):
+                return cat
+        return "Tech Trends"
 
     def get_google_trends_topics(self) -> list:
-        """Fetch trending topics from Google Trends, STRICTLY filtered for tech niche."""
+        """Fetch live high-velocity search trends from Google Trends."""
         topics = []
         try:
             url = "https://trends.google.com/trending/rss?geo=US"
-            headers = {"User-Agent": "Mozilla/5.0"}
+            headers = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64)"}
             res = requests.get(url, headers=headers, timeout=10)
             if res.status_code == 200:
                 root = ET.fromstring(res.content)
                 for item in root.findall(".//item"):
                     title = item.find("title")
                     if title is not None and title.text:
-                        raw_topic = title.text.strip()
-                        if self._is_tech_topic(raw_topic):
-                            topics.append(raw_topic)
-                            logger.info(f"✅ Tech trend accepted: {raw_topic}")
-                        else:
-                            logger.debug(f"❌ Non-tech trend filtered: {raw_topic}")
+                        raw = title.text.strip()
+                        topics.append(raw)
         except Exception as e:
-            logger.warning(f"Google Trends RSS: {e}")
+            logger.warning(f"Google Trends fetch: {e}")
         return topics
 
-    def get_evergreen_keywords(self) -> list:
-        """High-CPC, high-intent evergreen tech/AI seed topics."""
-        seeds = [
-            "Best Free AI Productivity Tools for Students and Professionals in 2026",
-            "How to Use Open Source LLMs Locally for Coding and Research",
-            "Top 7 Free Alternatives to Midjourney for Realistic AI Images",
-            "How to Build Automated Python Workflows with Zero Coding Experience",
-            "The Ultimate Guide to Starting a High-Traffic Blog with Zero Cost in 2026",
-            "Top 5 Cloud Hosting Platforms That Are 100 Percent Free Forever",
-            "How to Protect Your Online Privacy and Passwords in 2026",
-            "Best Lightweight Laptops for Programming AI and Multitasking",
-            "Step-by-Step Guide to Monetizing Websites with Google AdSense and Affiliates",
-            "How Agentic AI Will Transform Remote Jobs and Freelancing",
-            "Top 10 VS Code Extensions Every Developer Needs in 2026",
-            "Complete Guide to Self-Hosting AI Models on a Budget PC",
-            "Best Free Cybersecurity Tools to Protect Your Data Online",
-            "How to Create Professional Websites Using Only Free AI Tools",
-            "Top 8 Free AI Video Generators That Rival Sora and Runway",
-            "Best Free AI Writing Tools That Replace ChatGPT Plus in 2026",
-            "How to Automate Social Media Marketing Using Free AI Bots",
-            "Top 5 Free Cloud GPU Platforms for AI Model Training",
-            "Complete Beginners Guide to Prompt Engineering in 2026",
-            "How to Build and Deploy a Full Stack App Using Only AI Assistants"
+    def get_viral_seed_catalog(self) -> list:
+        """High-velocity viral seeds across Games, Movies, AI, and Gadgets."""
+        return [
+            # 🎮 Gaming Hits
+            "GTA 6 Official Release Date, Map Leaks, and Gameplay Mechanics: Complete 2026 Breakdown",
+            "Top 10 Most Anticipated Unreal Engine 5 Games Launching in 2026",
+            "PS5 Pro vs High-End Gaming PC: Which One Should You Buy in 2026?",
+            "The Best Free Open-World Games on Steam That Everyone Is Playing Right Now",
+            "Steam Deck 2 Rumors, Hardware Specs, and Expected Price: What We Know",
+
+            # 🤖 AI & Software Breakthroughs
+            "OpenAI GPT-5 and Gemini 2.0 Ultra: The Next Giant Leap in AI Reasoning",
+            "Top 10 Secret AI Websites That Feel Illegal to Know in 2026",
+            "How to Build Autonomous AI Agents for Free Without Writing Code",
+            "Best Free AI Video Generators That Rival Hollywood CGI in 2026",
+            "Apple Intelligence 2.0 Features: Everything New Coming to Your iPhone",
+
+            # 📱 Hardware & Next-Gen Gadgets
+            "iPhone 17 Pro Max Leaks: Slim Design, 2nm Chip, and Under-Display Cameras",
+            "Top 5 Budget Gaming Laptops Under 1000 Dollars That Crush Every 2026 Game",
+            "Nvidia RTX 5090 vs RTX 4090: Massive Performance Benchmarks Breakdown",
+            "Tesla Optimus Gen 3: How Humanoid Robots Are Entering Everyday Homes",
+            "The Best Lightweight Ultrabooks for Students and Programmers in 2026",
+
+            # 🎬 Sci-Fi & Pop Tech Entertainment
+            "Top 10 Must-Watch Sci-Fi Movies and Series Coming to Netflix and Max in 2026",
+            "How AI CGI and Deepfakes Are Quietly Revolutionizing Hollywood Movie Studios",
+            "Avatar 3 and Beyond: The Groundbreaking Visual Tech Powering the Sequel"
         ]
-        return seeds
 
     def get_next_topic(self, custom_topic: str = None) -> str:
         if custom_topic:
             return custom_topic
 
-        # First try tech-filtered Google Trends
+        # 1. Check Google Trends first
         trends = self.get_google_trends_topics()
         for t in trends:
-            candidate = f"Complete 2026 Guide: {t} — Everything You Need to Know"
+            cat = self.detect_category(t)
+            # Create high-converting click-worthy title
+            candidate = f"Everything You Need to Know About {t}: In-Depth 2026 Guide"
             if candidate not in self.published_topics:
-                logger.info(f"📌 Selected tech trending topic: {candidate}")
+                logger.info(f"🔥 Found live trending topic: {candidate} [{cat}]")
                 return candidate
 
-        # Fallback to curated evergreen tech seeds
-        seeds = self.get_evergreen_keywords()
+        # 2. Pull from viral seeds
+        seeds = self.get_viral_seed_catalog()
         random.shuffle(seeds)
-        for t in seeds:
-            if t not in self.published_topics:
-                logger.info(f"📌 Selected evergreen tech topic: {t}")
-                return t
+        for s in seeds:
+            if s not in self.published_topics:
+                logger.info(f"🚀 Selected high-traffic viral seed: {s}")
+                return s
 
-        return f"Comprehensive Guide to {config.BLOG_NICHE} Trends & Best Practices (2026)"
+        return f"Top Tech, Gaming & AI Trends Dominating 2026: Complete Guide"
 
 topic_hunter = TopicHunter()

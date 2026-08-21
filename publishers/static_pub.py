@@ -410,30 +410,48 @@ class StaticPublisher(BasePublisher):
 """
         return header + body + self._render_footer()
 
+    def _get_category_badge(self, cat: str) -> str:
+        cat_low = cat.lower()
+        if "gaming" in cat_low or "game" in cat_low:
+            return "bg-purple-600 text-white"
+        elif "gadget" in cat_low or "hardware" in cat_low or "phone" in cat_low or "laptop" in cat_low:
+            return "bg-emerald-600 text-white"
+        elif "movie" in cat_low or "entertainment" in cat_low or "sci-fi" in cat_low:
+            return "bg-rose-600 text-white"
+        elif "ai" in cat_low or "llm" in cat_low or "gpt" in cat_low:
+            return "bg-indigo-600 text-white"
+        else:
+            return "bg-slate-700 text-white"
+
     def build_home_page(self, articles: list):
         featured = articles[0] if articles else None
         grid_articles = articles[1:] if len(articles) > 1 else []
 
         cards_html = ""
         for art in grid_articles:
+            cat = art.get('category', 'Tech Trends')
+            badge_class = self._get_category_badge(cat)
             cards_html += f"""
-            <article class="bg-white dark:bg-slate-900 rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-shadow border border-slate-100 dark:border-slate-800 flex flex-col">
-                <a href="posts/{art['slug']}.html" class="block overflow-hidden aspect-video">
-                    <img src="{art['featured_image']}" alt="{art['title']}" class="w-full h-full object-cover hover:scale-105 transition-transform duration-300" loading="lazy">
+            <article data-category="{cat}" class="article-card bg-white dark:bg-slate-900 rounded-3xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 border border-slate-100 dark:border-slate-800 flex flex-col group">
+                <a href="posts/{art['slug']}.html" class="block overflow-hidden aspect-video relative">
+                    <img src="{art['featured_image']}" alt="{art['title']}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy">
+                    <span class="absolute top-4 left-4 px-3 py-1 {badge_class} rounded-xl text-xs font-black uppercase tracking-wider shadow-lg">
+                        {cat}
+                    </span>
                 </a>
                 <div class="p-6 flex flex-col flex-grow">
-                    <div class="flex items-center gap-2 text-xs font-semibold text-indigo-600 dark:text-indigo-400 mb-2">
-                        <span>{art['category']}</span> &bull; <span>{art['date']}</span>
+                    <div class="flex items-center gap-2 text-xs font-semibold text-slate-400 mb-3">
+                        <span>📅 {art['date']}</span> &bull; <span>⏱️ {art['read_time']} min read</span>
                     </div>
-                    <h3 class="text-xl font-bold font-display text-slate-900 dark:text-white mb-3 hover:text-indigo-600 transition-colors line-clamp-2">
+                    <h3 class="text-xl font-bold font-display text-slate-900 dark:text-white mb-3 group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors line-clamp-2 leading-tight">
                         <a href="posts/{art['slug']}.html">{art['title']}</a>
                     </h3>
-                    <p class="text-sm text-slate-500 dark:text-slate-400 line-clamp-3 mb-4 flex-grow">
+                    <p class="text-sm text-slate-500 dark:text-slate-400 line-clamp-3 mb-6 flex-grow leading-relaxed">
                         {art['meta_description']}
                     </p>
                     <div class="flex items-center justify-between text-xs text-slate-400 pt-4 border-t border-slate-100 dark:border-slate-800">
-                        <span>⏱️ {art['read_time']} min read</span>
-                        <a href="posts/{art['slug']}.html" class="font-bold text-indigo-600 dark:text-indigo-400 hover:underline">Read Guide &rarr;</a>
+                        <span class="font-bold text-slate-500 dark:text-slate-400">{config.BLOG_NAME}</span>
+                        <a href="posts/{art['slug']}.html" class="font-black text-indigo-600 dark:text-indigo-400 group-hover:translate-x-1 transition-transform inline-flex items-center gap-1">Read Full Guide &rarr;</a>
                     </div>
                 </div>
             </article>
@@ -441,20 +459,25 @@ class StaticPublisher(BasePublisher):
 
         hero_html = ""
         if featured:
+            f_cat = featured.get('category', 'Tech Trends')
+            f_badge = self._get_category_badge(f_cat)
             hero_html = f"""
-            <div class="mb-14 bg-gradient-to-br from-indigo-900 to-slate-900 rounded-3xl p-6 sm:p-10 text-white shadow-xl relative overflow-hidden border border-indigo-700/30">
+            <div class="mb-14 bg-gradient-to-br from-slate-900 via-indigo-950 to-slate-900 rounded-3xl p-6 sm:p-10 text-white shadow-2xl relative overflow-hidden border border-indigo-500/20">
                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
                     <div>
-                        <span class="px-3 py-1 bg-indigo-500/30 text-indigo-200 border border-indigo-400/30 rounded-full text-xs font-bold uppercase tracking-wider mb-4 inline-block">🌟 Featured Guide</span>
-                        <h2 class="text-2xl sm:text-4xl font-extrabold font-display leading-tight mb-4 hover:text-indigo-300 transition-colors">
+                        <div class="flex items-center gap-2 mb-4">
+                            <span class="px-3.5 py-1.5 {f_badge} rounded-xl text-xs font-black uppercase tracking-wider shadow-lg">🌟 Featured Story</span>
+                            <span class="text-xs text-slate-400">&bull; {featured['date']}</span>
+                        </div>
+                        <h2 class="text-2xl sm:text-4xl font-black font-display leading-[1.15] mb-4 hover:text-indigo-300 transition-colors">
                             <a href="posts/{featured['slug']}.html">{featured['title']}</a>
                         </h2>
-                        <p class="text-sm sm:text-base text-slate-300 mb-6 line-clamp-3 leading-relaxed">
+                        <p class="text-sm sm:text-base text-slate-300 mb-8 line-clamp-3 leading-relaxed font-medium">
                             {featured['meta_description']}
                         </p>
                         <div class="flex items-center gap-4">
-                            <a href="posts/{featured['slug']}.html" class="px-6 py-3 bg-indigo-600 hover:bg-indigo-500 text-white font-bold rounded-xl text-sm transition-colors shadow-lg">Read Complete Article</a>
-                            <span class="text-xs text-slate-400">⏱️ {featured['read_time']} min read</span>
+                            <a href="posts/{featured['slug']}.html" class="px-6 py-3.5 bg-indigo-600 hover:bg-indigo-500 text-white font-black rounded-xl text-sm transition-colors shadow-lg shadow-indigo-600/30">Read Full Story &rarr;</a>
+                            <span class="text-xs text-slate-400 font-semibold">⏱️ {featured['read_time']} min read</span>
                         </div>
                     </div>
                     <div class="rounded-2xl overflow-hidden shadow-2xl border border-white/10 aspect-video">
@@ -466,26 +489,70 @@ class StaticPublisher(BasePublisher):
 
         index_content = f"""
     <main class="max-w-6xl mx-auto px-4 sm:px-6 py-10 flex-grow">
-        <div class="text-center max-w-2xl mx-auto mb-12">
-            <h1 class="text-4xl sm:text-5xl font-extrabold font-display tracking-tight text-slate-900 dark:text-white mb-4">
+        <div class="text-center max-w-3xl mx-auto mb-12">
+            <span class="px-4 py-1.5 bg-indigo-50 dark:bg-indigo-950/60 text-indigo-600 dark:text-indigo-400 rounded-full text-xs font-black uppercase tracking-wider inline-block mb-4 border border-indigo-100 dark:border-indigo-900/40">
+                ⚡ Real-Time Tech, Gaming & AI Radar
+            </span>
+            <h1 class="text-4xl sm:text-5xl lg:text-6xl font-black font-display tracking-tight text-slate-900 dark:text-white mb-4">
                 {config.BLOG_TAGLINE}
             </h1>
-            <p class="text-base sm:text-lg text-slate-600 dark:text-slate-300">
+            <p class="text-base sm:text-lg text-slate-600 dark:text-slate-300 leading-relaxed font-medium">
                 {config.BLOG_DESCRIPTION}
             </p>
         </div>
 
         {hero_html}
 
-        <div class="flex items-center justify-between mb-8">
-            <h2 class="text-2xl font-bold font-display text-slate-900 dark:text-white">Latest Articles</h2>
-            <span class="text-xs font-semibold px-3 py-1 bg-slate-200 dark:bg-slate-800 rounded-full text-slate-600 dark:text-slate-400">{len(articles)} Guides Published</span>
+        <!-- Interactive Category Filter Tabs -->
+        <div class="mb-10 flex flex-wrap items-center justify-between gap-4 border-b border-slate-200 dark:border-slate-800 pb-4">
+            <div class="flex flex-wrap items-center gap-2" id="categoryTabs">
+                <button onclick="filterCategory('all')" class="cat-btn active px-4 py-2 rounded-xl text-xs font-bold bg-indigo-600 text-white transition-all shadow-sm">
+                    🌟 All Trending
+                </button>
+                <button onclick="filterCategory('gaming')" class="cat-btn px-4 py-2 rounded-xl text-xs font-bold bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-200 transition-all">
+                    🎮 Gaming & Esports
+                </button>
+                <button onclick="filterCategory('ai')" class="cat-btn px-4 py-2 rounded-xl text-xs font-bold bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-200 transition-all">
+                    🤖 AI & Breakthroughs
+                </button>
+                <button onclick="filterCategory('gadget')" class="cat-btn px-4 py-2 rounded-xl text-xs font-bold bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-200 transition-all">
+                    📱 Gadgets & Hardware
+                </button>
+                <button onclick="filterCategory('entertainment')" class="cat-btn px-4 py-2 rounded-xl text-xs font-bold bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-200 transition-all">
+                    🎬 Movies & Sci-Fi
+                </button>
+            </div>
+            <span class="text-xs font-bold text-slate-400" id="articleCount">{len(articles)} Guides Published</span>
         </div>
 
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8" id="articlesGrid">
             {cards_html if cards_html else '<p class="col-span-3 text-center text-slate-400 py-12">Generating first articles... Please check back in a few moments.</p>'}
         </div>
     </main>
+
+    <script>
+    function filterCategory(cat) {{
+        document.querySelectorAll('.cat-btn').forEach(btn => {{
+            btn.classList.remove('bg-indigo-600', 'text-white', 'shadow-sm');
+            btn.classList.add('bg-slate-100', 'dark:bg-slate-800', 'text-slate-600', 'dark:text-slate-300');
+        }});
+        event.currentTarget.classList.add('bg-indigo-600', 'text-white', 'shadow-sm');
+        event.currentTarget.classList.remove('bg-slate-100', 'dark:bg-slate-800', 'text-slate-600', 'dark:text-slate-300');
+
+        const cards = document.querySelectorAll('.article-card');
+        let visibleCount = 0;
+        cards.forEach(card => {{
+            const cardCat = (card.getAttribute('data-category') || '').toLowerCase();
+            if (cat === 'all' || cardCat.includes(cat)) {{
+                card.style.display = 'flex';
+                visibleCount++;
+            }} else {{
+                card.style.display = 'none';
+            }}
+        }});
+        document.getElementById('articleCount').innerText = visibleCount + ' Guides Displayed';
+    }}
+    </script>
         """
         
         full_html = self._render_header(
