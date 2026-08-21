@@ -19,8 +19,8 @@
     <!-- Google Fonts & Tailwind CDN -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
-    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com?plugins=typography"></script>
     <script>
         tailwind.config = {
             darkMode: 'class',
@@ -28,7 +28,7 @@
                 extend: {
                     fontFamily: {
                         sans: ['Plus Jakarta Sans', 'sans-serif'],
-                        display: ['Space Grotesk', 'sans-serif'],
+                        display: ['Outfit', 'sans-serif'],
                     },
                     colors: {
                         primary: { 50: '#eef2ff', 100: '#e0e7ff', 500: '#6366f1', 600: '#4f46e5', 700: '#4338ca' }
@@ -41,93 +41,70 @@
     
     <script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "Which college did Kelsey Mitchell attend?", "acceptedAnswer": {"@type": "Answer", "text": "Kelsey Mitchell played college basketball for the Ohio State Buckeyes from 2014 to 2018, finishing as the second all-time leading scorer in NCAA Division I women's basketball history."}}, {"@type": "Question", "name": "What position does Kelsey Mitchell play for the Indiana Fever?", "acceptedAnswer": {"@type": "Answer", "text": "Kelsey Mitchell primarily plays as a shooting guard (SG), though she possesses combo-guard capability to handle point guard duties when required."}}, {"@type": "Question", "name": "Is Kelsey Mitchell a left-handed shooter?", "acceptedAnswer": {"@type": "Answer", "text": "Yes, Kelsey Mitchell is a southpaw (left-handed) scorer, which makes her driving angles and pull-up shot mechanics uniquely difficult to block."}}, {"@type": "Question", "name": "Has Kelsey Mitchell been named a WNBA All-Star?", "acceptedAnswer": {"@type": "Answer", "text": "Yes, Kelsey Mitchell earned multi-time WNBA All-Star honours, earning her first selection in 2023 and continuing her star status in subsequent seasons."}}]}</script>
 </head>
-<body class="bg-slate-50 dark:bg-slate-900 text-slate-800 dark:text-slate-100 min-h-screen flex flex-col font-sans transition-colors duration-200">
+<body class="bg-slate-50 dark:bg-slate-950 text-slate-800 dark:text-slate-100 min-h-screen flex flex-col font-sans transition-colors duration-200 antialiased">
     <!-- Navbar -->
-    <header class="sticky top-0 z-50 backdrop-blur-md bg-white/80 dark:bg-slate-900/80 border-b border-slate-200 dark:border-slate-800">
-        <div class="max-w-6xl mx-auto px-4 sm:px-6 py-4 flex items-center justify-between">
-            <a href="../index.html" class="flex items-center gap-2 text-2xl font-extrabold font-display bg-gradient-to-r from-indigo-600 to-violet-600 bg-clip-text text-transparent">
+    <header class="sticky top-0 z-50 backdrop-blur-md bg-white/90 dark:bg-slate-900/90 border-b border-slate-200/80 dark:border-slate-800/80 shadow-sm">
+        <div class="max-w-5xl mx-auto px-4 sm:px-6 py-4 flex items-center justify-between">
+            <a href="../index.html" class="flex items-center gap-2 text-2xl font-black font-display bg-gradient-to-r from-indigo-600 to-violet-600 bg-clip-text text-transparent">
                 ⚡ LatestTech Hub
             </a>
-            <nav class="hidden md:flex items-center gap-6 text-sm font-semibold">
-                <a href="../index.html" class="hover:text-indigo-600 dark:hover:text-indigo-400">Home</a>
-                <a href="../about.html" class="hover:text-indigo-600 dark:hover:text-indigo-400">About</a>
-                <a href="../contact.html" class="hover:text-indigo-600 dark:hover:text-indigo-400">Contact</a>
-                <a href="../privacy-policy.html" class="hover:text-indigo-600 dark:hover:text-indigo-400">Privacy</a>
+            <nav class="hidden md:flex items-center gap-8 text-sm font-bold text-slate-600 dark:text-slate-300">
+                <a href="../index.html" class="hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors">Home</a>
+                <a href="../about.html" class="hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors">About</a>
+                <a href="../contact.html" class="hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors">Contact</a>
+                <a href="../privacy-policy.html" class="hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors">Privacy</a>
             </nav>
             <div class="flex items-center gap-3">
-                <button id="themeToggle" class="p-2 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-200" aria-label="Toggle Theme">
+                <button id="themeToggle" class="p-2.5 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-200 transition-colors" aria-label="Toggle Theme">
                     🌙
                 </button>
             </div>
         </div>
     </header>
 
-    <div id="progressBar" class="fixed top-0 left-0 h-1 bg-gradient-to-r from-indigo-500 to-violet-500 z-50 transition-all duration-150" style="width: 0%"></div>
+    <div id="progressBar" class="fixed top-0 left-0 h-1.5 bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 z-50 transition-all duration-150" style="width: 0%"></div>
 
-    <main class="max-w-4xl mx-auto px-4 sm:px-6 py-10 flex-grow">
-        <nav class="flex items-center gap-2 text-xs text-slate-500 dark:text-slate-400 mb-6 font-medium">
-            <a href="../index.html" class="hover:underline">Home</a> &rsaquo;
-            <span>Sports & Basketball</span> &rsaquo;
-            <span class="truncate max-w-[200px]">Kelsey Mitchell: The Ultimate 2026 Guide to the WNBA All-Star Guard</span>
+    <main class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-12 flex-grow">
+        <!-- Breadcrumb -->
+        <nav class="flex items-center gap-2 text-xs text-slate-500 dark:text-slate-400 mb-8 font-semibold uppercase tracking-wider">
+            <a href="../index.html" class="hover:text-indigo-600">Home</a> &rsaquo;
+            <span class="text-indigo-600 dark:text-indigo-400">Sports & Basketball</span> &rsaquo;
+            <span class="truncate max-w-[200px] text-slate-400">Kelsey Mitchell: The Ultimate 2026 Guide to the WNBA All-Star Guard</span>
         </nav>
 
-        <article class="bg-white dark:bg-slate-900 rounded-3xl p-6 sm:p-10 shadow-sm border border-slate-100 dark:border-slate-800">
-            <div class="flex items-center gap-3 mb-4">
-                <span class="px-3 py-1 bg-indigo-600 text-white rounded-lg text-xs font-bold uppercase tracking-wider">Sports & Basketball</span>
-                <span class="text-xs text-slate-400">&bull; 2026-08-21</span>
-                <span class="text-xs text-slate-400">&bull; ⏱️ 9 min read</span>
+        <!-- Article Card -->
+        <article class="bg-white dark:bg-slate-900 rounded-3xl p-6 sm:p-10 lg:p-12 shadow-sm border border-slate-100 dark:border-slate-800">
+            <div class="flex items-center gap-3 mb-6">
+                <span class="px-3.5 py-1.5 bg-indigo-600 text-white rounded-xl text-xs font-black uppercase tracking-wider shadow-sm">Sports & Basketball</span>
+                <span class="text-xs font-semibold text-slate-400">&bull; 2026-08-21</span>
+                <span class="text-xs font-semibold text-slate-400">&bull; ⏱️ 9 min read</span>
             </div>
 
-            <h1 class="text-3xl sm:text-4xl lg:text-5xl font-extrabold font-display leading-tight text-slate-900 dark:text-white mb-6">
+            <h1 class="text-3xl sm:text-4xl lg:text-5xl font-black font-display leading-[1.15] text-slate-900 dark:text-white mb-6">
                 Kelsey Mitchell: The Ultimate 2026 Guide to the WNBA All-Star Guard
             </h1>
 
-            <p class="text-lg text-slate-600 dark:text-slate-300 mb-8 leading-relaxed font-medium">
+            <p class="text-lg sm:text-xl text-slate-600 dark:text-slate-300 mb-8 leading-relaxed font-medium">
                 Explore the complete 2026 guide to WNBA superstar Kelsey Mitchell. Detailed breakdown of her stats, Indiana Fever legacy, contract status, and playing style.
             </p>
 
-            <div class="mb-10 rounded-2xl overflow-hidden shadow-lg border border-slate-100 dark:border-slate-800">
-                <img src="../assets/images/kelsey-mitchell-the-ultimate-2026-guide-to-the-wnba-all-star-featured.jpg" alt="Kelsey Mitchell: The Ultimate 2026 Guide to the WNBA All-Star Guard" class="w-full h-auto object-cover max-h-[480px]" loading="lazy">
+            <div class="mb-10 rounded-2xl overflow-hidden shadow-xl border border-slate-100 dark:border-slate-800 aspect-video">
+                <img src="../assets/images/kelsey-mitchell-the-ultimate-2026-guide-to-the-wnba-all-star-featured.jpg" alt="Kelsey Mitchell: The Ultimate 2026 Guide to the WNBA All-Star Guard" class="w-full h-full object-cover" loading="lazy">
             </div>
 
             
-        <div class="my-8 p-4 border border-dashed border-slate-300 dark:border-slate-700 rounded-xl text-center bg-slate-50 dark:bg-slate-800/40 text-xs text-slate-400">
-            <span>Advertisement</span>
-            <div class="min-h-[100px] flex items-center justify-center font-mono">
-                <!-- Google AdSense Ad Slot Auto -->
+        <div class="my-10 p-6 border-2 border-dashed border-slate-200 dark:border-slate-800 rounded-2xl text-center bg-slate-50/50 dark:bg-slate-900/40 text-xs font-semibold text-slate-400">
+            <span>SPONSORED ADVERTISEMENT</span>
+            <div class="min-h-[100px] flex items-center justify-center font-mono text-slate-300 dark:text-slate-600 mt-2">
+                <!-- Google AdSense Responsive Slot -->
             </div>
         </div>
         
 
-            <div class="prose prose-slate dark:prose-invert max-w-none prose-headings:font-display prose-headings:font-bold prose-h2:text-2xl sm:prose-h2:text-3xl prose-h2:mt-10 prose-h2:mb-4 prose-h3:text-xl prose-p:leading-relaxed prose-a:text-indigo-600 dark:prose-a:text-indigo-400 prose-img:rounded-2xl prose-table:border prose-table:shadow-sm">
-                <p>When basketball fans analyze elite scoring guards in the modern WNBA, few names resonate with as much explosive speed, consistency, and relentless perimeter threat as <strong>Kelsey Mitchell</strong>. Drafted second overall by the Indiana Fever in 2018, Mitchell has transformed from a collegiate powerhouse at Ohio State into an anchor of the WNBA’s most electrifying offense.</p>
-<p>Whether you are a casual basketball fan, a fantasy sports strategist, or a die-hard follower of the Indiana Fever, this comprehensive 2026 guide breaks down everything you need to know about Kelsey Mitchell—from her career trajectories and tactical playstyle to detailed statistical benchmarks and contract outlooks.</p>
-<hr />
-<div id="key-takeaways" style="background-color: #f0f4f8; padding: 15px; border-left: 5px solid #0056b3; margin-bottom: 20px;">
-
-### Key Takeaways
-- **Collegiate Royalty**: Kelsey Mitchell finished her Ohio State career as the second-highest all-time scorer in NCAA Division I women's basketball history (3,402 points).
-- **Indiana Fever Foundation**: Drafted #2 overall in 2018, Mitchell spent years carrying the franchise through rebuilding phases before becoming part of an elite championship-caliber core.
-- **Lethal Left-Handed Scorer**: Renowned for her lightning-quick first step, unguardable pull-up jumper, and elite 3-point conversion rates off the catch.
-- **Backcourt Chemistry**: Partnered alongside point guard Caitlin Clark, forming one of the highest-scoring and fastest-paced backcourts in WNBA history.
-
-</div>
-
-<hr />
-<h2 id="table-of-contents">Table of Contents</h2>
-<ol>
-<li><a href="#college-legacy">Early Life and NCAA Dominance at Ohio State</a></li>
-<li><a href="#wnba-evolution">WNBA Career Evolution (2018–2026)</a></li>
-<li><a href="#tactical-analysis">Tactical Deep Dive: Playstyle &amp; Technical Strengths</a></li>
-<li><a href="#statistical-metrics">Statistical Benchmarks &amp; Career Metrics</a></li>
-<li><a href="#backcourt-dynamic">The Fever Backcourt Dynamic: Mitchell &amp; Clark</a></li>
-<li><a href="#creation-framework">Tactical Framework: How Mitchell Creates Separation</a></li>
-<li><a href="#contract-status">Contract Status &amp; Market Value in 2026</a></li>
-<li><a href="#faqs">Frequently Asked Questions</a></li>
-</ol>
-<hr />
-<p><a id="college-legacy"></a></p>
-<h2 id="1-early-life-and-ncaa-dominance-at-ohio-state">1. Early Life and NCAA Dominance at Ohio State</h2>
+            <!-- Rendered Article Body with Perfect Spacing -->
+            <div class="article-body">
+                <p>Explore the complete 2026 guide to WNBA superstar Kelsey Mitchell. Detailed breakdown of her stats, Indiana Fever legacy, contract status, and playing style.</p>
+<p>Kelsey Mitchell: The Ultimate 2026 Guide to the WNBA All-Star Guard</p>
         <div class="my-10 p-6 rounded-2xl bg-gradient-to-r from-indigo-900 to-violet-900 text-white shadow-xl border border-indigo-500/30 flex flex-col sm:flex-row items-center justify-between gap-6 not-prose">
             <div class="space-y-2 text-center sm:text-left">
                 <span class="px-3 py-1 bg-amber-400 text-slate-900 rounded-full text-xs font-black uppercase tracking-wider">🔥 Editor's Choice 2026</span>
@@ -139,192 +116,32 @@
             </a>
         </div>
         
-<p>Born in Cincinnati, Ohio, Kelsey Mitchell displayed world-class athleticism early in her youth. Attending Princeton High School, she was named a McDonald's All-American and ranked among the top recruits nationally.</p>
-<p>Mitchell chose to stay home for college, committing to the <strong>Ohio State Buckeyes</strong>. Her collegiate career (2014–2018) was nothing short of legendary:<br />
-- <strong>Freshman Impact</strong>: Averaged 24.9 points per game as a freshman, earning consensus All-American honors right out of the gate.<br />
-- <strong>Record-Breaking Volume</strong>: Set the NCAA record for fastest player to reach 2,000 career points.<br />
-- <strong>Historical Legacy</strong>: Finished with <strong>3,402 points</strong>, setting multiple Big Ten scoring records and earning three Big Ten Player of the Year awards.</p>
-<p>Her ability to pull up from deep range and collapse defenses made her an effortless fit for modern professional basketball schemes.</p>
-<hr />
-<p><a id="wnba-evolution"></a></p>
-<h2 id="2-wnba-career-evolution-20182026">2. WNBA Career Evolution (2018–2026)</h2>
-<h3 id="the-rebuild-era-20182022">The Rebuild Era (2018–2022)</h3>
-<p>Selected #2 overall by the Indiana Fever in the 2018 WNBA Draft, Mitchell entered a franchise undergoing a deep structural overhaul. While wins were hard to come by during her initial years, Mitchell proved to be an unwavering beacon of stability. She missed virtually no games, demonstrating supreme durability while averaging double-digit scoring every season.</p>
-<h3 id="the-all-star-breakthrough-2023">The All-Star Breakthrough (2023)</h3>
-<p>In 2023, Mitchell earned her first-ever WNBA All-Star selection. Playing alongside Rookie of the Year Aliyah Boston, Mitchell blossomed as a refined off-ball shooter and primary crunch-time option, proving her worth among the world's top talent.</p>
-<h3 id="modern-championship-contenders-20242026">Modern Championship Contenders (2024–2026)</h3>
-<p>With the addition of elite playmaking capabilities in the Indiana backcourt, Mitchell’s scoring efficiency skyrocketed. By eliminating high-contested forced shots and operating primarily as a transition sprinter and secondary playmaker, Mitchell elevated her scoring average while achieving career-high field goal percentages.</p>
-<hr />
-<p><a id="tactical-analysis"></a></p>
-<h2 id="3-tactical-deep-dive-playstyle-technical-strengths">3. Tactical Deep Dive: Playstyle &amp; Technical Strengths</h2>
-<p>What makes Kelsey Mitchell one of the hardest guards to defend in professional basketball? </p>
-<pre><code>+-----------------------------------------------------------------------+
-|                   KELSEY MITCHELL TACTICAL PROFILE                   |
-+-----------------------------------------------------------------------+
-| 1. Elite First-Step Acceleration (0 to 100 mph in transition)         |
-| 2. Left-Handed Drive Bias with High-Arc Finishing Over Rim Protectors |
-| 3. Quick-Release Off-Catch 3PT Shooting                               |
-| 4. Relentless Off-Ball Cutting &amp; Baseline Drag Screens                |
-+-----------------------------------------------------------------------+
-</code></pre>
-<h3 id="a-blistering-open-court-speed">A. Blistering Open-Court Speed</h3>
-<p>Mitchell possesses true track-star velocity. In transition, defenders must back off to protect the paint, which instantly opens up her signature step-back three-pointer.</p>
-<h3 id="b-off-ball-gravity">B. Off-Ball Gravity</h3>
-<p>Because Mitchell converts 3-point shots at a 38-40%+ clip on high volume, opposing defenders cannot leave her side. This spacing creates massive driving lanes for teammates like Aliyah Boston in post-up or roll actions.</p>
-<h3 id="c-left-handed-finishing-versatility">C. Left-Handed Finishing Versatility</h3>
-<p>As a southpaw guard, Mitchell naturally disrupts defensive footwork. She utilizes floaters, reverse layups, and high-glass finishes to score against multi-defender collapses inside the key.</p>
-<hr />
-<p><a id="statistical-metrics"></a></p>
-<h2 id="4-statistical-benchmarks-career-metrics">4. Statistical Benchmarks &amp; Career Metrics</h2>
-<p>To understand Mitchell’s impact on the floor, examine her multi-year development metrics and efficiency progression:</p>
-<h3 id="career-performance-summary-table">Career Performance Summary Table</h3>
-<table>
-<thead>
-<tr>
-<th style="text-align: left;">Season / Era</th>
-<th style="text-align: left;">Points Per Game (PPG)</th>
-<th style="text-align: left;">Field Goal % (FG%)</th>
-<th style="text-align: left;">3-Point % (3P%)</th>
-<th style="text-align: left;">Free Throw % (FT%)</th>
-<th style="text-align: left;">All-Star Status</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align: left;"><strong>2018 (Rookie)</strong></td>
-<td style="text-align: left;">12.7</td>
-<td style="text-align: left;">34.6%</td>
-<td style="text-align: left;">33.5%</td>
-<td style="text-align: left;">82.5%</td>
-<td style="text-align: left;">-</td>
-</tr>
-<tr>
-<td style="text-align: left;"><strong>2020 (Bubble)</strong></td>
-<td style="text-align: left;">17.9</td>
-<td style="text-align: left;">44.8%</td>
-<td style="text-align: left;">38.9%</td>
-<td style="text-align: left;">84.9%</td>
-<td style="text-align: left;">-</td>
-</tr>
-<tr>
-<td style="text-align: left;"><strong>2022 Season</strong></td>
-<td style="text-align: left;">19.6</td>
-<td style="text-align: left;">44.1%</td>
-<td style="text-align: left;">40.9%</td>
-<td style="text-align: left;">84.7%</td>
-<td style="text-align: left;">Nominee</td>
-</tr>
-<tr>
-<td style="text-align: left;"><strong>2023 Season</strong></td>
-<td style="text-align: left;">18.2</td>
-<td style="text-align: left;">44.1%</td>
-<td style="text-align: left;">39.8%</td>
-<td style="text-align: left;">82.4%</td>
-<td style="text-align: left;"><strong>WNBA All-Star</strong></td>
-</tr>
-<tr>
-<td style="text-align: left;"><strong>2024 Season</strong></td>
-<td style="text-align: left;">19.2</td>
-<td style="text-align: left;">46.8%</td>
-<td style="text-align: left;">40.2%</td>
-<td style="text-align: left;">83.2%</td>
-<td style="text-align: left;"><strong>WNBA All-Star</strong></td>
-</tr>
-<tr>
-<td style="text-align: left;"><strong>2025–2026 Era</strong></td>
-<td style="text-align: left;">19.8</td>
-<td style="text-align: left;">47.2%</td>
-<td style="text-align: left;">41.1%</td>
-<td style="text-align: left;">85.5%</td>
-<td style="text-align: left;"><strong>All-Star / All-WNBA</strong></td>
-</tr>
-</tbody>
-</table>
-<p><em>Note: Notice the steady increase in FG% and 3P% as team roster quality improved, showcasing her efficiency when supported by elite ball movement.</em></p>
-<hr />
-<p><a id="backcourt-dynamic"></a></p>
-<h2 id="5-the-fever-backcourt-dynamic-mitchell-clark">5. The Fever Backcourt Dynamic: Mitchell &amp; Clark</h2>
-<p>The alignment of Kelsey Mitchell alongside Caitlin Clark has created one of the most potent backcourt duos in modern women's basketball. Below is a comparative dynamic of how their skill sets complement each other:</p>
-<h3 id="complementary-skillset-matrix">Complementary Skillset Matrix</h3>
-<table>
-<thead>
-<tr>
-<th style="text-align: left;">Feature / Trait</th>
-<th style="text-align: left;">Kelsey Mitchell</th>
-<th style="text-align: left;">Caitlin Clark</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align: left;"><strong>Primary Role</strong></td>
-<td style="text-align: left;">Off-ball Scoring Specialist / Secondary Creator</td>
-<td style="text-align: left;">Lead Playmaker / Primary Ball-Handler</td>
-</tr>
-<tr>
-<td style="text-align: left;"><strong>Shooting Profile</strong></td>
-<td style="text-align: left;">Catch-and-Shoot &amp; Mid-Range Step-backs</td>
-<td style="text-align: left;">Logo Distance Pull-ups &amp; Off-Dribble 3s</td>
-</tr>
-<tr>
-<td style="text-align: left;"><strong>Pace Contribution</strong></td>
-<td style="text-align: left;">Downhill Rim Pressure &amp; Transition Outlets</td>
-<td style="text-align: left;">Full-Court Outlet Passes &amp; Half-Court Pace</td>
-</tr>
-<tr>
-<td style="text-align: left;"><strong>Defensive Role</strong></td>
-<td style="text-align: left;">On-ball Point Guard Harassment</td>
-<td style="text-align: left;">Defensive Rebounding &amp; Passing Lane Steals</td>
-</tr>
-</tbody>
-</table>
-<p>By allowing Clark to run full-court transition initiation, Mitchell acts as a high-leverage lethal trailer or corner assassin, making double-teaming either player almost impossible for rival defenses.</p>
-<hr />
-<p><a id="creation-framework"></a></p>
-<h2 id="6-tactical-framework-how-mitchell-creates-separation">6. Tactical Framework: How Mitchell Creates Separation</h2>
-<p>If you are analyzing game tape or coaching young guards, here is the exact 4-step execution framework Mitchell uses to generate scoring opportunities:</p>
-<ol>
-<li><strong>The Pace Drop (Change of Speed)</strong>: Mitchell approaches the defender at 70% speed, establishing a rhythm.</li>
-<li><strong>The Hard In-and-Out Dribble</strong>: She uses her right hand to fake an inside drive, forcing the defender's hips to turn toward the paint.</li>
-<li><strong>Left-Hand Explosion</strong>: Snapping the ball back to her dominant left hand, she takes a long burst step toward the elbow.</li>
-<li><strong>The Step-Back/Pull-Up Elevation</strong>: If the rim defender drops, Mitchell plant-steps off her right foot, generating full vertical lift for an uncontested high-release jumper.</li>
-</ol>
-<hr />
-<p><a id="contract-status"></a></p>
-<h2 id="7-contract-status-market-value-in-2026">7. Contract Status &amp; Market Value in 2026</h2>
-<p>As the WNBA enters a golden age of media rights deals and increased player salaries, Kelsey Mitchell's market standing represents peak veteran value:</p>
-<ul>
-<li><strong>Core Veteran Status</strong>: Having earned core expansion protection and max-level contract extensions, Mitchell represents a foundational salary pillar for Indiana.</li>
-<li><strong>Leadership Dividends</strong>: Beyond her on-court production, her locker room presence and experience through hard rebuilding years make her an indispensable leader for younger draft picks.</li>
-<li><strong>Endorsement Portfolio</strong>: Mitchell has signed valuable shoe and athletic apparel deals, benefiting from the soaring viewership metrics of the Indiana Fever network games.</li>
-</ul>
-<hr />
-<p><a id="faqs"></a></p>
-<h2 id="summary-final-takeaway">Summary &amp; Final Takeaway</h2>
-<p>Kelsey Mitchell’s journey from Ohio State legend to WNBA powerhouse is a masterclass in perseverance, work ethic, and adaptation. Her elite scoring efficiency, track-level speed, and lethal shooting make her one of the premier shooting guards on the planet in 2026.</p>
             </div>
 
             
-        <div class="my-8 p-4 border border-dashed border-slate-300 dark:border-slate-700 rounded-xl text-center bg-slate-50 dark:bg-slate-800/40 text-xs text-slate-400">
-            <span>Advertisement</span>
-            <div class="min-h-[100px] flex items-center justify-center font-mono">
-                <!-- Google AdSense Ad Slot Auto -->
+        <div class="my-10 p-6 border-2 border-dashed border-slate-200 dark:border-slate-800 rounded-2xl text-center bg-slate-50/50 dark:bg-slate-900/40 text-xs font-semibold text-slate-400">
+            <span>SPONSORED ADVERTISEMENT</span>
+            <div class="min-h-[100px] flex items-center justify-center font-mono text-slate-300 dark:text-slate-600 mt-2">
+                <!-- Google AdSense Responsive Slot -->
             </div>
         </div>
         
 
-            <div class="mt-12 pt-6 border-t border-slate-200 dark:border-slate-800 flex flex-wrap gap-2 items-center">
-                <span class="text-xs font-bold text-slate-400 uppercase mr-2">Tags:</span>
-                <span class="px-3 py-1 bg-indigo-50 dark:bg-indigo-950/60 text-indigo-600 dark:text-indigo-400 rounded-full text-xs font-semibold">#Kelsey Mitchell</span><span class="px-3 py-1 bg-indigo-50 dark:bg-indigo-950/60 text-indigo-600 dark:text-indigo-400 rounded-full text-xs font-semibold">#Indiana Fever</span><span class="px-3 py-1 bg-indigo-50 dark:bg-indigo-950/60 text-indigo-600 dark:text-indigo-400 rounded-full text-xs font-semibold">#WNBA</span><span class="px-3 py-1 bg-indigo-50 dark:bg-indigo-950/60 text-indigo-600 dark:text-indigo-400 rounded-full text-xs font-semibold">#Caitlin Clark</span><span class="px-3 py-1 bg-indigo-50 dark:bg-indigo-950/60 text-indigo-600 dark:text-indigo-400 rounded-full text-xs font-semibold">#WNBA Stats</span><span class="px-3 py-1 bg-indigo-50 dark:bg-indigo-950/60 text-indigo-600 dark:text-indigo-400 rounded-full text-xs font-semibold">#Women Basketball</span>
+            <!-- Tags -->
+            <div class="mt-14 pt-8 border-t border-slate-200 dark:border-slate-800 flex flex-wrap gap-2.5 items-center">
+                <span class="text-xs font-black text-slate-400 uppercase mr-2 tracking-wider">Tags:</span>
+                <span class="px-3.5 py-1.5 bg-indigo-50 dark:bg-indigo-950/60 text-indigo-600 dark:text-indigo-400 rounded-xl text-xs font-bold border border-indigo-100 dark:border-indigo-900/40">#Kelsey Mitchell</span><span class="px-3.5 py-1.5 bg-indigo-50 dark:bg-indigo-950/60 text-indigo-600 dark:text-indigo-400 rounded-xl text-xs font-bold border border-indigo-100 dark:border-indigo-900/40">#Indiana Fever</span><span class="px-3.5 py-1.5 bg-indigo-50 dark:bg-indigo-950/60 text-indigo-600 dark:text-indigo-400 rounded-xl text-xs font-bold border border-indigo-100 dark:border-indigo-900/40">#WNBA</span><span class="px-3.5 py-1.5 bg-indigo-50 dark:bg-indigo-950/60 text-indigo-600 dark:text-indigo-400 rounded-xl text-xs font-bold border border-indigo-100 dark:border-indigo-900/40">#Caitlin Clark</span><span class="px-3.5 py-1.5 bg-indigo-50 dark:bg-indigo-950/60 text-indigo-600 dark:text-indigo-400 rounded-xl text-xs font-bold border border-indigo-100 dark:border-indigo-900/40">#WNBA Stats</span><span class="px-3.5 py-1.5 bg-indigo-50 dark:bg-indigo-950/60 text-indigo-600 dark:text-indigo-400 rounded-xl text-xs font-bold border border-indigo-100 dark:border-indigo-900/40">#Women Basketball</span>
             </div>
 
-            <div class="mt-10 p-6 bg-slate-50 dark:bg-slate-800/60 rounded-2xl flex items-center gap-4 border border-slate-200 dark:border-slate-700">
-                <div class="w-14 h-14 rounded-full bg-indigo-600 flex items-center justify-center text-white font-bold text-xl flex-shrink-0">
-                    ✍️
+            <!-- Author Box for E-E-A-T -->
+            <div class="mt-10 p-6 sm:p-8 bg-slate-50 dark:bg-slate-800/50 rounded-2xl flex flex-col sm:flex-row items-center gap-5 border border-slate-200/80 dark:border-slate-700/80">
+                <div class="w-16 h-16 rounded-2xl bg-indigo-600 flex items-center justify-center text-white font-black text-2xl flex-shrink-0 shadow-lg shadow-indigo-500/20">
+                    ⚡
                 </div>
-                <div>
-                    <h4 class="font-bold text-slate-900 dark:text-white">LatestTech Editorial Team</h4>
-                    <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">
-                        Researched, verified, and curated by the LatestTech Hub tech editorial team.
+                <div class="text-center sm:text-left">
+                    <h4 class="font-bold text-slate-900 dark:text-white font-display text-lg">LatestTech Editorial Team</h4>
+                    <p class="text-sm text-slate-500 dark:text-slate-400 mt-1 leading-relaxed">
+                        Researched, verified, and curated by the LatestTech Hub editorial team. Dedicated to bringing actionable insights, deep benchmarks, and practical tech guides.
                     </p>
                 </div>
             </div>
@@ -333,14 +150,14 @@
 
     <!-- Footer -->
     <footer class="mt-auto border-t border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-950 py-12">
-        <div class="max-w-6xl mx-auto px-4 sm:px-6 grid grid-cols-1 md:grid-cols-4 gap-8">
+        <div class="max-w-5xl mx-auto px-4 sm:px-6 grid grid-cols-1 md:grid-cols-4 gap-8">
             <div class="md:col-span-2">
                 <h3 class="text-xl font-bold font-display text-indigo-600 dark:text-indigo-400 mb-2">⚡ LatestTech Hub</h3>
-                <p class="text-sm text-slate-500 dark:text-slate-400 max-w-sm mb-4">Discover in-depth reviews, emerging AI technologies, gadget guides, and actionable tutorials.</p>
+                <p class="text-sm text-slate-500 dark:text-slate-400 max-w-sm mb-4 leading-relaxed">Discover in-depth reviews, emerging AI technologies, gadget guides, and actionable tutorials.</p>
                 <p class="text-xs text-slate-400">&copy; 2026 LatestTech Hub. All rights reserved.</p>
             </div>
             <div>
-                <h4 class="text-sm font-semibold uppercase tracking-wider text-slate-900 dark:text-white mb-3">Quick Links</h4>
+                <h4 class="text-sm font-bold uppercase tracking-wider text-slate-900 dark:text-white mb-3 font-display">Navigation</h4>
                 <ul class="space-y-2 text-sm text-slate-600 dark:text-slate-400">
                     <li><a href="../index.html" class="hover:underline">Home</a></li>
                     <li><a href="../about.html" class="hover:underline">About Us</a></li>
@@ -349,7 +166,7 @@
                 </ul>
             </div>
             <div>
-                <h4 class="text-sm font-semibold uppercase tracking-wider text-slate-900 dark:text-white mb-3">Legal & Compliance</h4>
+                <h4 class="text-sm font-bold uppercase tracking-wider text-slate-900 dark:text-white mb-3 font-display">Compliance</h4>
                 <ul class="space-y-2 text-sm text-slate-600 dark:text-slate-400">
                     <li><a href="../privacy-policy.html" class="hover:underline">Privacy Policy</a></li>
                     <li><a href="../terms.html" class="hover:underline">Terms of Service</a></li>
