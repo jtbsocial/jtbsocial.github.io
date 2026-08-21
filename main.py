@@ -34,9 +34,14 @@ def run_pipeline(custom_topic: str = None) -> dict:
     logger.info("✍️ Generating human-grade SEO article with Gemini...")
     article = generator.generate_article(topic, research_summary)
     
-    # 4. Free AI Image Engine
-    logger.info("🎨 Generating 16:9 featured artwork via Pollinations AI...")
-    img_path = image_engine.generate_featured_image(topic, article["slug"])
+    # 4. Free Ultra-HD AI Image Engine (FLUX.1 Studio Grade)
+    logger.info("🎨 Generating 16:9 Ultra-HD featured artwork via FLUX.1...")
+    img_path = image_engine.generate_featured_image(
+        topic, 
+        article["slug"], 
+        article.get("category", "Technology"),
+        article.get("image_prompt", "")
+    )
 
     # 5. Static Publisher
     logger.info("🌐 Publishing article and updating static website...")

@@ -21,6 +21,7 @@ class ArticleSchema(BaseModel):
     tags: List[str] = Field(description="4 to 6 relevant SEO tags")
     read_time_minutes: int = Field(description="Estimated reading time in minutes")
     markdown_content: str = Field(description="Complete 1500+ words detailed article in rich Markdown including Table of Contents, H2/H3s, tables, and takeaways")
+    image_prompt: str = Field(description="Vivid, photorealistic 30-word visual description of a futuristic high-tech scene for 8K studio photography")
     faqs: List[FAQItem] = Field(description="4 to 5 high-intent FAQ questions and answers")
 
 class ContentGenerator:
