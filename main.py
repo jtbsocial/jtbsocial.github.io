@@ -46,7 +46,11 @@ def run_pipeline(custom_topic: str = None) -> dict:
     from indexer import search_indexer
     search_indexer.ping_search_engines(f"{config.BLOG_URL}/posts/{article['slug']}.html")
 
-    # 7. Mark Published
+    # 7. Auto Social Media Syndication (Telegram & Discord)
+    from social_poster import social_poster
+    social_poster.broadcast_new_post(article, img_path)
+
+    # 8. Mark Published
     topic_hunter.mark_published(topic)
     logger.info(f"✅ Topic '{topic}' marked as published!")
     logger.info("=" * 60)

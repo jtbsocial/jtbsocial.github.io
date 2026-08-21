@@ -45,6 +45,19 @@ with st.sidebar:
     )
     
     st.markdown("---")
+    st.subheader("📢 Social Media Auto-Poster")
+    tg_token = st.text_input("Telegram Bot Token", value=os.getenv("TELEGRAM_BOT_TOKEN", ""), type="password")
+    tg_chat = st.text_input("Telegram Channel ID", value=os.getenv("TELEGRAM_CHAT_ID", ""), placeholder="@yourchannel")
+    dc_hook = st.text_input("Discord Webhook URL", value=os.getenv("DISCORD_WEBHOOK_URL", ""), type="password")
+    
+    if tg_token:
+        os.environ["TELEGRAM_BOT_TOKEN"] = tg_token
+    if tg_chat:
+        os.environ["TELEGRAM_CHAT_ID"] = tg_chat
+    if dc_hook:
+        os.environ["DISCORD_WEBHOOK_URL"] = dc_hook
+
+    st.markdown("---")
     st.markdown("### 💰 AdSense Approval Checklist")
     st.checkbox("✅ Privacy Policy Page", value=True, disabled=True)
     st.checkbox("✅ Terms of Service Page", value=True, disabled=True)
