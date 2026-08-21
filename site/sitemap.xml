@@ -6,13 +6,19 @@
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}/posts/everything-you-need-to-know-about-steve-harvey-in-depth-2026.html</loc>
+    <loc>https://jtbsocial.github.io/latesttech/posts/everything-you-need-to-know-about-woody-marks-in-depth-2026-.html</loc>
     <lastmod>2026-08-21</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}/posts/everything-you-need-to-know-about-laura-rutledge-in-depth-20.html</loc>
+    <loc>https://jtbsocial.github.io/latesttech/posts/everything-you-need-to-know-about-steve-harvey-in-depth-2026.html</loc>
+    <lastmod>2026-08-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://jtbsocial.github.io/latesttech/posts/everything-you-need-to-know-about-laura-rutledge-in-depth-20.html</loc>
     <lastmod>2026-08-21</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
