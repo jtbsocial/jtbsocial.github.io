@@ -76,6 +76,7 @@ class StaticPublisher(BasePublisher):
             "date": article_data.get("date"),
             "read_time": article_data.get("read_time_minutes", 5),
             "featured_image": featured_image_path,
+            "markdown_content": md_content_linked,
             "faq_schema": article_data.get("faq_schema", {})
         }
 
