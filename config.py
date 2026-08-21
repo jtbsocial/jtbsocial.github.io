@@ -11,7 +11,7 @@ class Config:
     BLOG_NAME = os.getenv("BLOG_NAME", "LatestTech Hub")
     BLOG_TAGLINE = os.getenv("BLOG_TAGLINE", "Latest Tech Insights, AI Tools & Smart Guides")
     BLOG_DESCRIPTION = os.getenv("BLOG_DESCRIPTION", "Discover in-depth reviews, emerging AI technologies, gadget guides, and actionable tutorials.")
-    BLOG_URL = os.getenv("BLOG_URL", "https://jtbsocial.github.io/latesttech")
+    BLOG_URL = os.getenv("BLOG_URL", "https://jtbsocial.github.io")
     BLOG_AUTHOR = os.getenv("BLOG_AUTHOR", "LatestTech Editorial Team")
     BLOG_NICHE = os.getenv("BLOG_NICHE", "Artificial Intelligence & Modern Technology")
     

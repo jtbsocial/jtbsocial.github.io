@@ -13,7 +13,7 @@ AFFILIATE_OFFERS = {
         "headline": "Supercharge Your Workflow with Top AI Tools",
         "description": "Explore the 10 best free AI productivity tools that are automating 90% of daily work for professionals in 2026.",
         "cta_text": "Explore Top AI Tools →",
-        "url": "https://jtbsocial.github.io/latesttech/posts/top-10-free-ai-productivity-tools-that-will-automate-90-of-y.html",
+        "url": "https://jtbsocial.github.io/posts/top-10-free-ai-productivity-tools-that-will-automate-90-of-y.html",
         "badge": "🔥 STAFF PICK",
         "gradient": "linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%)"
     },
@@ -21,7 +21,7 @@ AFFILIATE_OFFERS = {
         "headline": "Free AI Coding Assistants That Beat GitHub Copilot",
         "description": "Discover 5 powerful free AI coding assistants with real benchmarks proving they outperform paid alternatives.",
         "cta_text": "View Full Comparison →",
-        "url": "https://jtbsocial.github.io/latesttech/posts/5-free-ai-coding-assistants-that-outperform-github-copilot-i.html",
+        "url": "https://jtbsocial.github.io/posts/5-free-ai-coding-assistants-that-outperform-github-copilot-i.html",
         "badge": "⚡ DEVELOPER PICK",
         "gradient": "linear-gradient(135deg, #0f172a 0%, #334155 100%)"
     },
@@ -29,7 +29,7 @@ AFFILIATE_OFFERS = {
         "headline": "GTA 6 & Next-Gen 2026 Gaming Roadmap",
         "description": "Explore gameplay mechanics, map leaks, and system requirements for the biggest game launch of the decade.",
         "cta_text": "Read Full Gaming Guide →",
-        "url": "https://jtbsocial.github.io/latesttech/posts/gta-6-official-release-date-map-leaks-and-gameplay-mechanics.html",
+        "url": "https://jtbsocial.github.io/posts/gta-6-official-release-date-map-leaks-and-gameplay-mechanics.html",
         "badge": "🎮 GAMING EXCLUSIVE",
         "gradient": "linear-gradient(135deg, #7e22ce 0%, #9333ea 100%)"
     },
@@ -37,7 +37,7 @@ AFFILIATE_OFFERS = {
         "headline": "iPhone 17 Pro Max & 2nm Hardware Deep Dive",
         "description": "See the complete breakdown of Apple's upcoming 2nm A19 Pro silicon, under-display tech, and camera upgrades.",
         "cta_text": "Check Gadget Specs →",
-        "url": "https://jtbsocial.github.io/latesttech/posts/iphone-17-pro-max-leaks-slim-design-2nm-a19-pro-chip-and-und.html",
+        "url": "https://jtbsocial.github.io/posts/iphone-17-pro-max-leaks-slim-design-2nm-a19-pro-chip-and-und.html",
         "badge": "📱 TECH HARDWARE",
         "gradient": "linear-gradient(135deg, #059669 0%, #10b981 100%)"
     },
@@ -45,7 +45,7 @@ AFFILIATE_OFFERS = {
         "headline": "Run Open-Source LLMs Locally for Free",
         "description": "The complete 2026 guide to 7 open-source LLMs you can run on your own hardware for coding, writing, and research.",
         "cta_text": "See the Full Guide →",
-        "url": "https://jtbsocial.github.io/latesttech/posts/top-7-free-open-source-llms-you-can-run-locally-for-coding-i.html",
+        "url": "https://jtbsocial.github.io/posts/top-7-free-open-source-llms-you-can-run-locally-for-coding-i.html",
         "badge": "🌟 EDITOR'S CHOICE",
         "gradient": "linear-gradient(135deg, #2563eb 0%, #3b82f6 100%)"
     }
