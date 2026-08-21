@@ -503,55 +503,110 @@ class StaticPublisher(BasePublisher):
 
         {hero_html}
 
-        <!-- Interactive Category Filter Tabs -->
-        <div class="mb-10 flex flex-wrap items-center justify-between gap-4 border-b border-slate-200 dark:border-slate-800 pb-4">
+        <!-- Interactive Search & Category Filter Bar -->
+        <div class="mb-10 flex flex-col md:flex-row items-center justify-between gap-4 border-b border-slate-200 dark:border-slate-800 pb-6">
             <div class="flex flex-wrap items-center gap-2" id="categoryTabs">
-                <button onclick="filterCategory('all')" class="cat-btn active px-4 py-2 rounded-xl text-xs font-bold bg-indigo-600 text-white transition-all shadow-sm">
+                <button onclick="filterCategory('all', this)" class="cat-btn active px-4 py-2 rounded-xl text-xs font-bold bg-indigo-600 text-white transition-all shadow-sm">
                     🌟 All Trending
                 </button>
-                <button onclick="filterCategory('gaming')" class="cat-btn px-4 py-2 rounded-xl text-xs font-bold bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-200 transition-all">
-                    🎮 Gaming & Esports
+                <button onclick="filterCategory('gaming', this)" class="cat-btn px-4 py-2 rounded-xl text-xs font-bold bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-200 transition-all">
+                    🎮 Gaming
                 </button>
-                <button onclick="filterCategory('ai')" class="cat-btn px-4 py-2 rounded-xl text-xs font-bold bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-200 transition-all">
-                    🤖 AI & Breakthroughs
+                <button onclick="filterCategory('ai', this)" class="cat-btn px-4 py-2 rounded-xl text-xs font-bold bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-200 transition-all">
+                    🤖 AI & Tools
                 </button>
-                <button onclick="filterCategory('gadget')" class="cat-btn px-4 py-2 rounded-xl text-xs font-bold bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-200 transition-all">
-                    📱 Gadgets & Hardware
+                <button onclick="filterCategory('gadget', this)" class="cat-btn px-4 py-2 rounded-xl text-xs font-bold bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-200 transition-all">
+                    📱 Gadgets
                 </button>
-                <button onclick="filterCategory('entertainment')" class="cat-btn px-4 py-2 rounded-xl text-xs font-bold bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-200 transition-all">
-                    🎬 Movies & Sci-Fi
+                <button onclick="filterCategory('entertainment', this)" class="cat-btn px-4 py-2 rounded-xl text-xs font-bold bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-200 transition-all">
+                    🎬 Movies & Pop
                 </button>
             </div>
-            <span class="text-xs font-bold text-slate-400" id="articleCount">{len(articles)} Guides Published</span>
+            
+            <!-- Live Search Bar -->
+            <div class="w-full md:w-auto flex items-center gap-3">
+                <div class="relative w-full sm:w-72">
+                    <input type="text" id="searchInput" oninput="searchArticles()" placeholder="🔍 Search games, AI, phones..." class="w-full px-4 py-2.5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-xs font-semibold text-slate-800 dark:text-slate-200 focus:outline-none focus:ring-2 focus:ring-indigo-500 shadow-sm">
+                </div>
+            </div>
         </div>
 
+        <!-- Articles Grid -->
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8" id="articlesGrid">
             {cards_html if cards_html else '<p class="col-span-3 text-center text-slate-400 py-12">Generating first articles... Please check back in a few moments.</p>'}
+        </div>
+
+        <!-- Pagination / Load More Section -->
+        <div class="mt-14 text-center" id="paginationSection">
+            <button id="loadMoreBtn" onclick="loadMoreArticles()" class="px-8 py-4 bg-white dark:bg-slate-900 text-indigo-600 dark:text-indigo-400 font-extrabold text-sm rounded-2xl border-2 border-indigo-600/30 hover:border-indigo-600 dark:border-indigo-500/30 dark:hover:border-indigo-500 shadow-lg hover:shadow-xl transition-all inline-flex items-center gap-2 group">
+                <span>⚡ Load More Trending Stories</span>
+                <span class="group-hover:translate-y-0.5 transition-transform">&darr;</span>
+            </button>
+            <p class="text-xs font-bold text-slate-400 mt-4" id="paginationStatus">Showing all available stories</p>
         </div>
     </main>
 
     <script>
-    function filterCategory(cat) {{
-        document.querySelectorAll('.cat-btn').forEach(btn => {{
-            btn.classList.remove('bg-indigo-600', 'text-white', 'shadow-sm');
-            btn.classList.add('bg-slate-100', 'dark:bg-slate-800', 'text-slate-600', 'dark:text-slate-300');
-        }});
-        event.currentTarget.classList.add('bg-indigo-600', 'text-white', 'shadow-sm');
-        event.currentTarget.classList.remove('bg-slate-100', 'dark:bg-slate-800', 'text-slate-600', 'dark:text-slate-300');
+    let currentCategory = 'all';
+    const PAGE_SIZE = 6;
+    let visibleLimit = PAGE_SIZE;
 
-        const cards = document.querySelectorAll('.article-card');
-        let visibleCount = 0;
-        cards.forEach(card => {{
+    function renderVisibleCards() {{
+        const searchQuery = (document.getElementById('searchInput').value || '').toLowerCase().trim();
+        const cards = Array.from(document.querySelectorAll('.article-card'));
+        
+        let matchingCards = cards.filter(card => {{
             const cardCat = (card.getAttribute('data-category') || '').toLowerCase();
-            if (cat === 'all' || cardCat.includes(cat)) {{
-                card.style.display = 'flex';
-                visibleCount++;
-            }} else {{
-                card.style.display = 'none';
-            }}
+            const cardText = card.innerText.toLowerCase();
+            const matchesCat = (currentCategory === 'all' || cardCat.includes(currentCategory));
+            const matchesSearch = (!searchQuery || cardText.includes(searchQuery));
+            return matchesCat && matchesSearch;
         }});
-        document.getElementById('articleCount').innerText = visibleCount + ' Guides Displayed';
+
+        cards.forEach(c => c.style.display = 'none');
+
+        matchingCards.slice(0, visibleLimit).forEach(c => c.style.display = 'flex');
+
+        const loadBtn = document.getElementById('loadMoreBtn');
+        const statusText = document.getElementById('paginationStatus');
+        
+        if (matchingCards.length <= visibleLimit) {{
+            if (loadBtn) loadBtn.style.display = 'none';
+            if (statusText) statusText.innerText = `Showing all ${{matchingCards.length}} matching stories`;
+        }} else {{
+            if (loadBtn) loadBtn.style.display = 'inline-flex';
+            if (statusText) statusText.innerText = `Showing ${{Math.min(visibleLimit, matchingCards.length)}} of ${{matchingCards.length}} stories`;
+        }}
     }}
+
+    function filterCategory(cat, btn) {{
+        currentCategory = cat;
+        visibleLimit = PAGE_SIZE;
+        document.querySelectorAll('.cat-btn').forEach(b => {{
+            b.classList.remove('bg-indigo-600', 'text-white', 'shadow-sm');
+            b.classList.add('bg-slate-100', 'dark:bg-slate-800', 'text-slate-600', 'dark:text-slate-300');
+        }});
+        if (btn) {{
+            btn.classList.add('bg-indigo-600', 'text-white', 'shadow-sm');
+            btn.classList.remove('bg-slate-100', 'dark:bg-slate-800', 'text-slate-600', 'dark:text-slate-300');
+        }}
+        renderVisibleCards();
+    }}
+
+    function searchArticles() {{
+        visibleLimit = PAGE_SIZE;
+        renderVisibleCards();
+    }}
+
+    function loadMoreArticles() {{
+        visibleLimit += PAGE_SIZE;
+        renderVisibleCards();
+    }}
+
+    document.addEventListener('DOMContentLoaded', () => {{
+        renderVisibleCards();
+    }});
+    renderVisibleCards();
     </script>
         """
         
