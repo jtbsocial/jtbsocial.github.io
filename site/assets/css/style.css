@@ -1,0 +1,10 @@
+
+        html { scroll-behavior: smooth; }
+        .prose a { text-decoration: none; font-weight: 600; }
+        .prose a:hover { text-decoration: underline; }
+        .prose table { width: 100%; border-collapse: collapse; margin: 1.5rem 0; font-size: 0.95rem; }
+        .prose th { background-color: #f1f5f9; padding: 0.75rem 1rem; border: 1px solid #cbd5e1; text-align: left; font-weight: 700; }
+        .dark .prose th { background-color: #1e293b; border-color: #334155; }
+        .prose td { padding: 0.75rem 1rem; border: 1px solid #e2e8f0; }
+        .dark .prose td { border-color: #334155; }
+        
