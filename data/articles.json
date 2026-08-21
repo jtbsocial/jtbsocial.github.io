@@ -1,5 +1,60 @@
 [
   {
+    "title": "Kelsey Mitchell: The Ultimate 2026 Guide to the WNBA All-Star Guard",
+    "slug": "kelsey-mitchell-the-ultimate-2026-guide-to-the-wnba-all-star",
+    "meta_description": "Explore the complete 2026 guide to WNBA superstar Kelsey Mitchell. Detailed breakdown of her stats, Indiana Fever legacy, contract status, and playing style.",
+    "category": "Sports & Basketball",
+    "tags": [
+      "Kelsey Mitchell",
+      "Indiana Fever",
+      "WNBA",
+      "Caitlin Clark",
+      "WNBA Stats",
+      "Women Basketball"
+    ],
+    "date": "2026-08-21",
+    "read_time": 9,
+    "featured_image": "assets/images/kelsey-mitchell-the-ultimate-2026-guide-to-the-wnba-all-star-featured.jpg",
+    "faq_schema": {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Which college did Kelsey Mitchell attend?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Kelsey Mitchell played college basketball for the Ohio State Buckeyes from 2014 to 2018, finishing as the second all-time leading scorer in NCAA Division I women's basketball history."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What position does Kelsey Mitchell play for the Indiana Fever?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Kelsey Mitchell primarily plays as a shooting guard (SG), though she possesses combo-guard capability to handle point guard duties when required."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Is Kelsey Mitchell a left-handed shooter?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes, Kelsey Mitchell is a southpaw (left-handed) scorer, which makes her driving angles and pull-up shot mechanics uniquely difficult to block."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Has Kelsey Mitchell been named a WNBA All-Star?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes, Kelsey Mitchell earned multi-time WNBA All-Star honours, earning her first selection in 2023 and continuing her star status in subsequent seasons."
+          }
+        }
+      ]
+    }
+  },
+  {
     "title": "Next-Gen Aerial Warfare: The Definitive 2026 Guide to Unmanned Combat Aerial Vehicles (UCAVs)",
     "slug": "next-gen-aerial-warfare-the-definitive-2026-guide-to-unmanne",
     "meta_description": "Discover the ultimate 2026 guide to unmanned combat aerial vehicles (UCAVs). Explore autonomous stealth drones, loyal wingmen, AI combat tech, and specs.",
