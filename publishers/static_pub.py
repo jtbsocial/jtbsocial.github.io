@@ -202,6 +202,67 @@ class StaticPublisher(BasePublisher):
 </html>
 """
 
+    def _build_toc(self, content_html: str) -> str:
+        """Extract H2 headings from HTML and build a clickable Table of Contents."""
+        import re as _re
+        headings = _re.findall(r'<h2[^>]*>(.*?)</h2>', content_html, _re.DOTALL)
+        if not headings:
+            return ""
+        
+        toc_items = ""
+        for i, h in enumerate(headings):
+            clean = _re.sub(r'<[^>]+>', '', h).strip()
+            anchor_id = _re.sub(r'[^a-z0-9]+', '-', clean.lower()).strip('-')
+            toc_items += f'<li><a href="#toc-{i}" class="block py-1.5 px-3 text-sm text-slate-600 dark:text-slate-400 hover:text-indigo-600 dark:hover:text-indigo-400 hover:bg-indigo-50 dark:hover:bg-indigo-950/30 rounded-lg transition-colors truncate">{clean}</a></li>\n'
+        
+        return f"""
+        <div class="bg-white dark:bg-slate-900 rounded-2xl p-5 border border-slate-200 dark:border-slate-800 shadow-sm">
+            <h3 class="text-sm font-black uppercase tracking-wider text-slate-900 dark:text-white mb-3 font-display flex items-center gap-2">
+                📑 Table of Contents
+            </h3>
+            <ul class="space-y-0.5">{toc_items}</ul>
+        </div>
+        """
+
+    def _add_heading_ids(self, content_html: str) -> str:
+        """Add anchor IDs to H2 headings for ToC linking."""
+        import re as _re
+        counter = [0]
+        def replacer(match):
+            idx = counter[0]
+            counter[0] += 1
+            tag_content = match.group(0)
+            return tag_content.replace('<h2', f'<h2 id="toc-{idx}"', 1)
+        return _re.sub(r'<h2[^>]*>', replacer, content_html)
+
+    def _build_related_posts(self, current_slug: str) -> str:
+        """Build Related Posts sidebar widget."""
+        articles = self._load_all_articles()
+        related = [a for a in articles if a.get("slug") != current_slug][:4]
+        if not related:
+            return ""
+        
+        items = ""
+        for art in related:
+            items += f"""
+            <a href="{art['slug']}.html" class="flex gap-3 p-2.5 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-800/60 transition-colors group">
+                <img src="../{art['featured_image']}" alt="{art['title']}" class="w-16 h-16 rounded-xl object-cover flex-shrink-0 border border-slate-200 dark:border-slate-700">
+                <div class="min-w-0">
+                    <h4 class="text-sm font-bold text-slate-800 dark:text-slate-200 group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors line-clamp-2 leading-tight">{art['title']}</h4>
+                    <span class="text-xs text-slate-400 mt-1 block">⏱️ {art.get('read_time', 5)} min</span>
+                </div>
+            </a>
+            """
+        
+        return f"""
+        <div class="bg-white dark:bg-slate-900 rounded-2xl p-5 border border-slate-200 dark:border-slate-800 shadow-sm">
+            <h3 class="text-sm font-black uppercase tracking-wider text-slate-900 dark:text-white mb-4 font-display flex items-center gap-2">
+                🔥 Popular Guides
+            </h3>
+            <div class="space-y-1">{items}</div>
+        </div>
+        """
+
     def _render_post_page(self, article: dict, content_html: str) -> str:
         schema_json = json.dumps(article.get("faq_schema", {})) if article.get("faq_schema") else ""
         header = self._render_header(
@@ -223,10 +284,20 @@ class StaticPublisher(BasePublisher):
         </div>
         """
 
+        # Add anchor IDs to headings for ToC
+        content_html = self._add_heading_ids(content_html)
+        
+        # Build sidebar widgets
+        toc_html = self._build_toc(content_html)
+        related_html = self._build_related_posts(article.get("slug", ""))
+        
+        share_url = f"{config.BLOG_URL}/posts/{article['slug']}.html"
+        share_title = article['title'].replace(' ', '+')
+
         body = f"""
     <div id="progressBar" class="fixed top-0 left-0 h-1.5 bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 z-50 transition-all duration-150" style="width: 0%"></div>
 
-    <main class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-12 flex-grow">
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 flex-grow">
         <!-- Breadcrumb -->
         <nav class="flex items-center gap-2 text-xs text-slate-500 dark:text-slate-400 mb-8 font-semibold uppercase tracking-wider">
             <a href="../index.html" class="hover:text-indigo-600">Home</a> &rsaquo;
@@ -234,54 +305,107 @@ class StaticPublisher(BasePublisher):
             <span class="truncate max-w-[200px] text-slate-400">{article['title']}</span>
         </nav>
 
-        <!-- Article Card -->
-        <article class="bg-white dark:bg-slate-900 rounded-3xl p-6 sm:p-10 lg:p-12 shadow-sm border border-slate-100 dark:border-slate-800">
-            <div class="flex items-center gap-3 mb-6">
-                <span class="px-3.5 py-1.5 bg-indigo-600 text-white rounded-xl text-xs font-black uppercase tracking-wider shadow-sm">{article['category']}</span>
-                <span class="text-xs font-semibold text-slate-400">&bull; {article['date']}</span>
-                <span class="text-xs font-semibold text-slate-400">&bull; ⏱️ {article['read_time']} min read</span>
-            </div>
-
-            <h1 class="text-3xl sm:text-4xl lg:text-5xl font-black font-display leading-[1.15] text-slate-900 dark:text-white mb-6">
-                {article['title']}
-            </h1>
-
-            <p class="text-lg sm:text-xl text-slate-600 dark:text-slate-300 mb-8 leading-relaxed font-medium">
-                {article['meta_description']}
-            </p>
-
-            <div class="mb-10 rounded-2xl overflow-hidden shadow-xl border border-slate-100 dark:border-slate-800 aspect-video">
-                <img src="../{article['featured_image']}" alt="{article['title']}" class="w-full h-full object-cover" loading="lazy">
-            </div>
-
-            {adsense_box}
-
-            <!-- Rendered Article Body with Perfect Spacing -->
-            <div class="article-body">
-                {content_html}
-            </div>
-
-            {adsense_box}
-
-            <!-- Tags -->
-            <div class="mt-14 pt-8 border-t border-slate-200 dark:border-slate-800 flex flex-wrap gap-2.5 items-center">
-                <span class="text-xs font-black text-slate-400 uppercase mr-2 tracking-wider">Tags:</span>
-                {tags_html}
-            </div>
-
-            <!-- Author Box for E-E-A-T -->
-            <div class="mt-10 p-6 sm:p-8 bg-slate-50 dark:bg-slate-800/50 rounded-2xl flex flex-col sm:flex-row items-center gap-5 border border-slate-200/80 dark:border-slate-700/80">
-                <div class="w-16 h-16 rounded-2xl bg-indigo-600 flex items-center justify-center text-white font-black text-2xl flex-shrink-0 shadow-lg shadow-indigo-500/20">
-                    ⚡
+        <!-- Two-Column Layout: Article + Sidebar -->
+        <div class="grid grid-cols-1 lg:grid-cols-[1fr_320px] gap-10 items-start">
+            
+            <!-- LEFT: Main Article -->
+            <article class="bg-white dark:bg-slate-900 rounded-3xl p-6 sm:p-10 lg:p-12 shadow-sm border border-slate-100 dark:border-slate-800">
+                <div class="flex items-center gap-3 mb-6">
+                    <span class="px-3.5 py-1.5 bg-indigo-600 text-white rounded-xl text-xs font-black uppercase tracking-wider shadow-sm">{article['category']}</span>
+                    <span class="text-xs font-semibold text-slate-400">&bull; {article['date']}</span>
+                    <span class="text-xs font-semibold text-slate-400">&bull; ⏱️ {article['read_time']} min read</span>
                 </div>
-                <div class="text-center sm:text-left">
-                    <h4 class="font-bold text-slate-900 dark:text-white font-display text-lg">{config.BLOG_AUTHOR}</h4>
-                    <p class="text-sm text-slate-500 dark:text-slate-400 mt-1 leading-relaxed">
-                        Researched, verified, and curated by the {config.BLOG_NAME} editorial team. Dedicated to bringing actionable insights, deep benchmarks, and practical tech guides.
-                    </p>
+
+                <h1 class="text-3xl sm:text-4xl font-black font-display leading-[1.15] text-slate-900 dark:text-white mb-6">
+                    {article['title']}
+                </h1>
+
+                <p class="text-lg text-slate-600 dark:text-slate-300 mb-8 leading-relaxed font-medium">
+                    {article['meta_description']}
+                </p>
+
+                <div class="mb-10 rounded-2xl overflow-hidden shadow-xl border border-slate-100 dark:border-slate-800 aspect-video">
+                    <img src="../{article['featured_image']}" alt="{article['title']}" class="w-full h-full object-cover" loading="lazy">
                 </div>
-            </div>
-        </article>
+
+                {adsense_box}
+
+                <!-- Rendered Article Body -->
+                <div class="article-body">
+                    {content_html}
+                </div>
+
+                {adsense_box}
+
+                <!-- Tags -->
+                <div class="mt-14 pt-8 border-t border-slate-200 dark:border-slate-800 flex flex-wrap gap-2.5 items-center">
+                    <span class="text-xs font-black text-slate-400 uppercase mr-2 tracking-wider">Tags:</span>
+                    {tags_html}
+                </div>
+
+                <!-- Author Box for E-E-A-T -->
+                <div class="mt-10 p-6 sm:p-8 bg-slate-50 dark:bg-slate-800/50 rounded-2xl flex flex-col sm:flex-row items-center gap-5 border border-slate-200/80 dark:border-slate-700/80">
+                    <div class="w-16 h-16 rounded-2xl bg-indigo-600 flex items-center justify-center text-white font-black text-2xl flex-shrink-0 shadow-lg shadow-indigo-500/20">
+                        ⚡
+                    </div>
+                    <div class="text-center sm:text-left">
+                        <h4 class="font-bold text-slate-900 dark:text-white font-display text-lg">{config.BLOG_AUTHOR}</h4>
+                        <p class="text-sm text-slate-500 dark:text-slate-400 mt-1 leading-relaxed">
+                            Researched, verified, and curated by the {config.BLOG_NAME} editorial team. Dedicated to bringing actionable insights, deep benchmarks, and practical tech guides.
+                        </p>
+                    </div>
+                </div>
+            </article>
+
+            <!-- RIGHT: Sticky Sidebar -->
+            <aside class="hidden lg:flex flex-col gap-6 sticky top-24">
+                
+                <!-- Table of Contents -->
+                {toc_html}
+
+                <!-- Share This Article -->
+                <div class="bg-white dark:bg-slate-900 rounded-2xl p-5 border border-slate-200 dark:border-slate-800 shadow-sm">
+                    <h3 class="text-sm font-black uppercase tracking-wider text-slate-900 dark:text-white mb-4 font-display">
+                        📤 Share This Guide
+                    </h3>
+                    <div class="flex flex-wrap gap-2">
+                        <a href="https://twitter.com/intent/tweet?url={share_url}&text={share_title}" target="_blank" rel="noopener"
+                           class="flex-1 py-2.5 px-3 bg-slate-900 dark:bg-slate-800 text-white text-xs font-bold rounded-xl text-center hover:bg-slate-700 transition-colors">
+                            𝕏 Tweet
+                        </a>
+                        <a href="https://www.linkedin.com/sharing/share-offsite/?url={share_url}" target="_blank" rel="noopener"
+                           class="flex-1 py-2.5 px-3 bg-blue-700 text-white text-xs font-bold rounded-xl text-center hover:bg-blue-600 transition-colors">
+                            in LinkedIn
+                        </a>
+                        <a href="https://pinterest.com/pin/create/button/?url={share_url}&description={share_title}" target="_blank" rel="noopener"
+                           class="flex-1 py-2.5 px-3 bg-red-600 text-white text-xs font-bold rounded-xl text-center hover:bg-red-500 transition-colors">
+                            📌 Pin
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Sidebar Ad Slot -->
+                <div class="bg-white dark:bg-slate-900 rounded-2xl p-5 border border-slate-200 dark:border-slate-800 shadow-sm">
+                    <div class="text-center text-xs font-semibold text-slate-400 mb-2">ADVERTISEMENT</div>
+                    <div class="min-h-[250px] flex items-center justify-center border-2 border-dashed border-slate-200 dark:border-slate-700 rounded-xl text-slate-300 dark:text-slate-600 text-xs">
+                        <!-- Google AdSense Sidebar Slot -->
+                    </div>
+                </div>
+
+                <!-- Related Posts -->
+                {related_html}
+
+                <!-- Newsletter Signup -->
+                <div class="bg-gradient-to-br from-indigo-600 to-violet-700 rounded-2xl p-6 text-white shadow-lg">
+                    <h3 class="text-sm font-black uppercase tracking-wider mb-2 font-display">📬 Stay Updated</h3>
+                    <p class="text-xs opacity-90 mb-4 leading-relaxed">Get the latest AI tools, coding guides, and tech insights delivered weekly.</p>
+                    <a href="../index.html" class="block w-full py-3 bg-white text-indigo-700 font-black text-sm rounded-xl text-center hover:bg-indigo-50 transition-colors shadow-sm">
+                        Browse All Guides →
+                    </a>
+                </div>
+
+            </aside>
+        </div>
     </main>
 """
         return header + body + self._render_footer()
